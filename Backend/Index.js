@@ -49,8 +49,11 @@ let users = [
 // ================= API ROUTES =================
 
 // GET all users
-app.get("/api/users", (req, res) => {
-  res.json(users);
+app.get("/api/getdata", async(req, res) => {
+  //res.json(users);
+  const response = await fetch('http://localhost:5000/symptoms');
+  const data = await response.json();
+  res.json(data);
 });
 
 // GET a single user by ID
@@ -91,7 +94,6 @@ app.delete("/api/users/:id", (req, res) => {
 // ==============================================
 
 // Server listening
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
+app.listen(3000, () => {
+  console.log(`🚀 Server is running on port ${3000}`);
 });

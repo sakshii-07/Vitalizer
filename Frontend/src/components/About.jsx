@@ -2,8 +2,18 @@ import React from "react";
 
 export const About = () => {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-start justify-center py-16 px-4">
-      <div className="w-full max-w-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm p-8">
+    <div
+      className="min-h-screen relative flex items-start justify-center py-16 px-4 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1584036561566-baf8f5f1b144')",
+      }}
+    >
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/40 dark:bg-black/70"></div>
+
+      {/* Main card */}
+      <div className="relative z-10 w-full max-w-2xl bg-white/60 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm p-8 backdrop-blur-md">
         {/* Top: About Me (center) */}
         <div className="text-center">
           <h1 className="text-3xl font-bold text-black dark:text-white">About Me</h1>
@@ -72,7 +82,7 @@ export const About = () => {
 
           <button
             type="button"
-            className="mt-6 inline-flex items-center justify-center px-6 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 transition"
+            className="mt-6 inline-flex items-center justify-center px-6 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-700/70 text-gray-900 dark:text-white shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 transition"
           >
             HOME
           </button>
