@@ -2,15 +2,15 @@
 
 // export const Symptomss = () => {
 //   return (
-//     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center pt-20 space-y-10">
+//     <div className="min-h-screen bg-gray-100 [.dark_&]:bg-gray-900 flex flex-col items-center pt-20 space-y-10">
 
 //       {/* Scrollable Card */}
-//       <div className="flex w-[1300px] h-[250px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden">
+//       <div className="flex w-[1300px] h-[250px] bg-white [.dark_&]:bg-gray-800 border border-gray-200 [.dark_&]:border-gray-700 rounded-lg shadow-sm overflow-hidden">
 //         <div className="overflow-y-auto p-6 w-full">
-//           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+//           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 [.dark_&]:text-white">
 //             The following is the list of symptoms and their ID's
 //           </h5>
-//           <p className="font-normal text-gray-700 dark:text-gray-400">
+//           <p className="font-normal text-gray-700 [.dark_&]:text-gray-400">
 //             Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order. <br /><br />
 //             🔸 Acquisition 1: Company A bought Company B for $20B.<br />
 //             🔸 Acquisition 2: Company X merged with Company Y for $15B.<br />
@@ -94,17 +94,17 @@
 //   };
 
 //   return (
-//     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col items-center pt-20 space-y-10">
+//     <div className="min-h-screen bg-gray-100 [.dark_&]:bg-gray-900 flex flex-col items-center pt-20 space-y-10">
 
 //       {/* 🟩 Scrollable Symptoms Card */}
-//       <div className="flex w-[1300px] h-[250px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm overflow-hidden">
+//       <div className="flex w-[1300px] h-[250px] bg-white [.dark_&]:bg-gray-800 border border-gray-200 [.dark_&]:border-gray-700 rounded-3xl shadow-sm overflow-hidden">
 //         <div className="overflow-y-auto p-6 w-full">
-//           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+//           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 [.dark_&]:text-white">
 //             The following is a list of symptoms and their IDs
 //           </h5>
 //           <div>
 //             {error && <p className="text-red-500">{error}</p>}
-//             <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300">
+//             <ul className="list-disc pl-5 text-gray-700 [.dark_&]:text-gray-300">
 //               {symptoms.map((symptom) => (
 //                 <li key={symptom.id}>{symptom.name}</li>
 //               ))}
@@ -114,8 +114,8 @@
 //       </div>
 
 //       {/* 🟦 Input Card (Replaces Left/Center/Right Grouped Card) */}
-//       <div className="flex flex-col items-center w-[1000px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-8 space-y-4">
-//         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+//       <div className="flex flex-col items-center w-[1000px] bg-white [.dark_&]:bg-gray-800 border border-gray-200 [.dark_&]:border-gray-700 rounded-2xl shadow-md p-8 space-y-4">
+//         <h2 className="text-lg font-semibold text-gray-800 [.dark_&]:text-gray-100">
 //           Enter Symptom IDs (comma separated)
 //         </h2>
 
@@ -124,7 +124,7 @@
 //           value={input}
 //           onChange={handleInputChange}
 //           placeholder="e.g., 10, 23, 45"
-//           className="w-[700px] p-3 border rounded-lg border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+//           className="w-[700px] p-3 border rounded-lg border-gray-300 [.dark_&]:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 [.dark_&]:bg-gray-700 [.dark_&]:text-white"
 //         />
 
 //         {inputError && (
@@ -136,7 +136,7 @@
 //             {numbers.map((num, index) => (
 //               <span
 //                 key={index}
-//                 className="px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200 rounded-full text-sm"
+//                 className="px-3 py-1 bg-blue-100 text-blue-700 [.dark_&]:bg-blue-800 [.dark_&]:text-blue-200 rounded-full text-sm"
 //               >
 //                 {num}
 //               </span>
@@ -211,20 +211,20 @@ export const Symptomss = () => {
       }}
     >
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/70"></div>
+      <div className="absolute inset-0 bg-black/40 [.dark_&]:bg-black/70"></div>
 
       {/* Main content on top of background */}
       <div className="relative z-10 flex flex-col items-center space-y-10 w-full">
 
         {/* 🟩 Scrollable Symptoms Card */}
-        <div className="flex w-[1300px] h-[250px] bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm overflow-hidden">
+        <div className="flex w-[1300px] h-[250px] bg-white/70 [.dark_&]:bg-gray-800/70 backdrop-blur-sm border border-gray-200 [.dark_&]:border-gray-700 rounded-3xl shadow-sm overflow-hidden">
           <div className="overflow-y-auto p-6 w-full">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 [.dark_&]:text-white">
               The following is the list of symptoms and their IDs
             </h5>
             <div>
               {error && <p className="text-red-500">{error}</p>}
-              <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300">
+              <ul className="list-disc pl-5 text-gray-700 [.dark_&]:text-gray-300">
                 {symptoms.map((symptom) => (
                   <li key={symptom.id}>{symptom.name}</li>
                 ))}
@@ -234,8 +234,8 @@ export const Symptomss = () => {
         </div>
 
         {/* 🟦 Input Card (Replaces Left/Center/Right Grouped Card) */}
-        <div className="flex flex-col items-center w-[1000px] bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-8 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+        <div className="flex flex-col items-center w-[1000px] bg-white/50 [.dark_&]:bg-gray-800/50 backdrop-blur-sm border border-gray-200 [.dark_&]:border-gray-700 rounded-2xl shadow-md p-8 space-y-4">
+          <h2 className="text-lg font-semibold text-gray-800 [.dark_&]:text-gray-100">
             Enter Symptom IDs (comma separated)
           </h2>
 
@@ -244,7 +244,7 @@ export const Symptomss = () => {
             value={input}
             onChange={handleInputChange}
             placeholder="e.g., 10, 23, 45"
-            className="w-[700px] p-3 border rounded-lg border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            className="w-[700px] p-3 border rounded-lg border-gray-300 [.dark_&]:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 [.dark_&]:bg-gray-700 [.dark_&]:text-white"
           />
 
           {inputError && (
@@ -256,7 +256,7 @@ export const Symptomss = () => {
               {numbers.map((num, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200 rounded-full text-sm"
+                  className="px-3 py-1 bg-blue-100 text-blue-700 [.dark_&]:bg-blue-800 [.dark_&]:text-blue-200 rounded-full text-sm"
                 >
                   {num}
                 </span>

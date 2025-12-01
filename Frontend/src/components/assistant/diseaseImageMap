@@ -1,0 +1,18 @@
+export const diseaseImageMap = {
+    "asthma": "24bbdc78-942c-4e59-b218-998124cdc508",
+    "diabetes": "52a48c3d-31cd-43bd-a4c9-15314f31f1b5",
+    "hypertension": "d5a12e0f-f8be-4dd1-82e4-dbbf73f2d7fb",
+    "migraine": "a79d9c8b-ae45-4ec9-95a2-5b422a2f51ac",
+    "covid": "8f14e3f4-86c4-4f0e-8839-76f1bbab10d2",
+    "influenza": "bd7f1537-c6ef-4f32-9d0a-7fd065d494a7",
+    "pneumonia": "e84240d4-5f91-4ee6-8f25-62334fcb0e10",
+    "arthritis": "d54b2dc5-29df-4f89-b72d-dbc6c0e20a1c",
+    "dermatitis": "7f0e7a33-dafe-424b-89b2-384ef9da3e1e",
+    "acne": "c5c817db-0b30-4469-ac8a-bc11fec3d2ad",
+    "anxiety": "a294ae29-e2a3-47a2-bd60-feea2f0d2bf2",
+    "depression": "56b4e02c-86cb-4767-b3ff-2606e2d1ee93",
+    "thyroid": "5eb1e48f-cb20-4a5f-b2ed-018e415a5112",
+    "ulcer": "78272c08-9b12-49ea-91dd-de35509c3892",
+    "jaundice": "6a774985-9994-4d17-a8ac-96492c14b2af",
+    "malaria": "a630ab4d-6a62-46c4-96f5-cf2b62dcb8e7",
+};

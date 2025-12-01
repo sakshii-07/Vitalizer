@@ -1,141 +1,206 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+  apiFetchSymptoms,
+  apiFetchDiagnosis,
+  apiFetchDiseaseDetails,
+} from "./app";
+import { DiseaseDetails } from "./components/assistant/DiseaseDetails";
 
-const Symptoms = () => {
-    const [symptoms, setSymptoms] = useState([]);
-    const [error, setError] = useState(null);
+export default function Symptoms() {
+  const [symptoms, setSymptoms] = useState([]);
+  const [symptomSearch, setSymptomSearch] = useState("");
+  const [selectedSymptomIds, setSelectedSymptomIds] = useState([]);
 
-    //const API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFrc2hheXZpc2h3YWthcm1hNTQzMUBnbWFpbC5jb20iLCJyb2xlIjoiVXNlciIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL3NpZCI6IjExMzkxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMTA5IiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6IjEwMCIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IkJhc2ljIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9sYW5ndWFnZSI6ImVuLWdiIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9leHBpcmF0aW9uIjoiMjA5OS0xMi0zMSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcHN0YXJ0IjoiMjAyNC0wNy0xNSIsImlzcyI6Imh0dHBzOi8vYXV0aHNlcnZpY2UucHJpYWlkLmNoIiwiYXVkIjoiaHR0cHM6Ly9oZWFsdGhzZXJ2aWNlLnByaWFpZC5jaCIsImV4cCI6MTc1MjkxMzcyNiwibmJmIjoxNzUyOTA2NTI2fQ.aEy2ZrbacKymEtq5oMuuUurQnuCcBnYrgJOAZAXbmpQ"; 
-    //const BASE_URL = "https://healthservice.priaid.ch";
-    //const LANG = "en-gb";
+  const [symptomLoading, setSymptomLoading] = useState(true);
+  const [symptomError, setSymptomError] = useState(null);
 
-    useEffect(() => {
-        const fetchSymptoms = async () => {
-            try {
-                // 👇 Build the full query URL like in the Java version
-//                const url = `${BASE_URL}/symptoms?token=${API_KEY}&language=${LANG}`;
-                const url='http://localhost:3000/api/getdata';
+  const [diagnosis, setDiagnosis] = useState(null);
+  const [diagnosisLoading, setDiagnosisLoading] = useState(false);
+  const [diagnosisError, setDiagnosisError] = useState(null);
 
-                const response = await axios.get(url); // No need for params object
-                setSymptoms(response.data);
-            } catch (err) {
-                console.error("API error:", err);
-                setError("Failed to fetch symptoms: " + err.message);
-            }
-        };
+  const [selectedDisease, setSelectedDisease] = useState(null);
+  const [diseaseDetails, setDiseaseDetails] = useState(null);
+  const [detailsLoading, setDetailsLoading] = useState(false);
 
-        fetchSymptoms();
-    }, []);
+  useEffect(() => {
+    const fetchSymptoms = async () => {
+      try {
+        setSymptomLoading(true);
+        const data = await apiFetchSymptoms();
+        setSymptoms(data);
+      } catch (err) {
+        setSymptomError("Failed to fetch symptoms.");
+      } finally {
+        setSymptomLoading(false);
+      }
+    };
 
-    return (
-        <div>
-            <h2>Symptoms</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <ul>
-                {symptoms.map(symptom => (
-                    <li key={symptom.id}>{symptom.name}</li>
-                ))}
-            </ul>
-        </div>
+    fetchSymptoms();
+  }, []);
+
+  const filteredSymptoms = symptoms.filter((symptom) =>
+    symptom.name.toLowerCase().includes(symptomSearch.toLowerCase())
+  );
+
+  const toggleSymptom = (id) => {
+    setSelectedSymptomIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
-};
+  };
 
-export default Symptoms;
+  const clearSelection = () => {
+    setSelectedSymptomIds([]);
+    setDiagnosis(null);
+    setSelectedDisease(null);
+    setDiseaseDetails(null);
+  };
 
+  const handleDiagnose = async () => {
+    if (!selectedSymptomIds.length) {
+      alert("Please select symptoms");
+      return;
+    }
 
+    try {
+      setDiagnosisLoading(true);
+      const data = await apiFetchDiagnosis(selectedSymptomIds);
 
+      if (!data || !data.possible_diseases) {
+        setDiagnosisError("Invalid response.");
+        return;
+      }
 
-// import axios from "axios";
-// import { useEffect, useState } from "react";
+      setDiagnosis(data);
+      setDiagnosisError(null);
+    } catch (err) {
+      setDiagnosisError("Could not fetch diagnosis.");
+    } finally {
+      setDiagnosisLoading(false);
+    }
+  };
 
-// const Symptoms = () => {
-//   const [symptoms, setSymptoms] = useState([]);
-//   const [error, setError] = useState(null);
-//   const [input, setInput] = useState("");
-//   const [numbers, setNumbers] = useState([]);
+  const handleDiseaseClick = async (disease) => {
+    setSelectedDisease(disease);
+    setDetailsLoading(true);
+    setDiseaseDetails(null);
 
-//   useEffect(() => {
-//     const fetchSymptoms = async () => {
-//       try {
-//         const url = "http://localhost:3000/api/getdata";
-//         const response = await axios.get(url);
-//         setSymptoms(response.data);
-//       } catch (err) {
-//         console.error("API error:", err);
-//         setError("Failed to fetch symptoms: " + err.message);
-//       }
-//     };
-//     fetchSymptoms();
-//   }, []);
+    try {
+      const data = await apiFetchDiseaseDetails(disease);
+      setDiseaseDetails(data);
+    } catch (err) {
+      console.log("Details error:", err);
+    } finally {
+      setDetailsLoading(false);
+    }
+  };
 
-//   const handleInputChange = (e) => {
-//     const value = e.target.value;
-//     if (/^[0-9, ]*$/.test(value)) {
-//       setInput(value);
-//       const nums = value
-//         .split(",")
-//         .map((n) => n.trim())
-//         .filter((n) => n !== "");
-//       setNumbers(nums);
-//     }
-//   };
+  return (
+    <div className="p-6">
+      <h1 className="text-4xl font-bold mb-3">🩺 Medical Assistant</h1>
+      <p className="text-gray-600 [.dark_&]:text-gray-300 mb-6">
+        Select symptoms → Get diseases → Click to view details.
+      </p>
 
-//   const handleSearch = () => {
-//     console.log("Searching for:", numbers);
-//     alert(`Searching for: ${numbers.join(", ")}`);
-//   };
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* ================= SYMPTOM SELECTION ================= */}
+        <section className="bg-white [.dark_&]:bg-gray-800 rounded-xl shadow-lg p-5">
+          <h2 className="text-2xl font-semibold mb-3">1️⃣ Select Symptoms</h2>
 
-//   return (
-//     <div className="flex flex-col items-center min-h-screen bg-gray-100 dark:bg-gray-900 py-10">
-//       {/* 🟩 Upper Symptoms Card */}
-//       <div className="w-[600px] bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 border border-gray-200 dark:border-gray-700 mb-8">
-//         <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-//           Symptoms
-//         </h2>
-//         {error && <p className="text-red-500">{error}</p>}
-//         <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300">
-//           {symptoms.map((symptom) => (
-//             <li key={symptom.id}>{symptom.name}</li>
-//           ))}
-//         </ul>
-//       </div>
+          <input
+            type="text"
+            placeholder="Search symptoms..."
+            value={symptomSearch}
+            onChange={(e) => setSymptomSearch(e.target.value)}
+            className="w-full px-3 py-2 rounded-md border [.dark_&]:bg-gray-900"
+          />
 
-//       {/* 🟦 Lower Input Card (replacing old left/center/right mini cards) */}
-//       <div className="w-[500px] bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-//         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-//           Enter Numbers (comma separated)
-//         </h2>
+          <div className="flex flex-wrap gap-2 mt-4 max-h-60 overflow-y-auto p-2 border rounded-md">
+            {filteredSymptoms.map((sym) => (
+              <button
+                key={sym.id}
+                onClick={() => toggleSymptom(sym.id)}
+                className={`px-3 py-1 rounded-full text-sm border transition
+                  ${
+                    selectedSymptomIds.includes(sym.id)
+                      ? "bg-blue-600 text-white border-blue-700"
+                      : "bg-gray-100 [.dark_&]:bg-gray-700 [.dark_&]:text-gray-200 hover:bg-gray-200"
+                  }`}
+              >
+                {sym.name.replace(/_/g, " ")}
+              </button>
+            ))}
+          </div>
 
-//         <input
-//           type="text"
-//           value={input}
-//           onChange={handleInputChange}
-//           placeholder="e.g., 12, 45, 89"
-//           className="w-full p-2 border rounded-lg border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-//         />
+          <div className="flex gap-3 mt-4">
+            <button
+              onClick={handleDiagnose}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700"
+            >
+              {diagnosisLoading ? "Analyzing..." : "Get Diagnosis"}
+            </button>
+            <button
+              onClick={clearSelection}
+              className="bg-gray-200 [.dark_&]:bg-gray-700 px-4 py-2 rounded-lg"
+            >
+              Clear
+            </button>
+          </div>
+        </section>
 
-//         {numbers.length > 0 && (
-//           <div className="flex flex-wrap gap-2 mt-4">
-//             {numbers.map((num, index) => (
-//               <span
-//                 key={index}
-//                 className="px-3 py-1 bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200 rounded-full text-sm"
-//               >
-//                 {num}
-//               </span>
-//             ))}
-//           </div>
-//         )}
+        {/* ================= DIAGNOSIS RESULTS ================= */}
+        <section className="bg-white [.dark_&]:bg-gray-800 rounded-xl shadow-lg p-5">
+          <h2 className="text-2xl font-semibold mb-3">2️⃣ Results & Details</h2>
 
-//         <button
-//           onClick={handleSearch}
-//           className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-//         >
-//           Search
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
+          {diagnosisError && (
+            <p className="text-red-500 mb-2">{diagnosisError}</p>
+          )}
 
-// export default Symptoms;
+          {!diagnosis && (
+            <p className="text-gray-500 text-sm">Select symptoms to begin...</p>
+          )}
+
+          {diagnosis?.possible_diseases?.length > 0 && (
+            <div className="space-y-3 max-h-60 overflow-y-auto mb-4">
+              {diagnosis.possible_diseases.map((d) => (
+                <div
+                  key={d.disease}
+                  onClick={() => handleDiseaseClick(d.disease)}
+                  className={`p-3 rounded-lg border cursor-pointer transition ${
+                    selectedDisease === d.disease
+                      ? "border-blue-500 bg-blue-50 [.dark_&]:bg-blue-900"
+                      : "hover:bg-gray-100 [.dark_&]:hover:bg-gray-700"
+                  }`}
+                >
+                  <div className="font-bold">{d.disease}</div>
+                  <div className="text-xs mt-1">
+                    Match Score:{" "}
+                    <span className="font-semibold">
+                      {d.matched_symptom_count}/{d.total_symptoms}
+                    </span>
+                  </div>
+
+                  {/* MATCH PROGRESS BAR */}
+                  <div className="w-full bg-gray-300 h-2 rounded mt-1">
+                    <div
+                      className="bg-blue-600 h-2 rounded"
+                      style={{
+                        width: `${Math.round(d.match_ratio * 100)}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ================= DETAILS COMPONENT ================= */}
+          <DiseaseDetails
+            disease={selectedDisease}
+            details={diseaseDetails}
+            loading={detailsLoading}
+          />
+        </section>
+      </div>
+    </div>
+  );
+}

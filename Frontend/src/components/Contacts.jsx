@@ -1,70 +1,149 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export const Contacts = () => {
+
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.href = "https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+  }, []);
+
   return (
-    <div
-      className="flex flex-col items-center min-h-screen pt-24 space-y-6 relative bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1584036561566-baf8f5f1b144')",
-      }}
-    >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/70"></div>
+    <div className="min-h-screen relative pt-28 pb-20 px-4 bg-gradient-to-br from-blue-50 to-white [.dark_&]:from-gray-900 [.dark_&]:to-gray-800 overflow-hidden">
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center w-full space-y-6">
+      {/* 🔵 Floating background blobs */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-10 left-5 w-72 h-72 bg-blue-300/40 [.dark_&]:bg-blue-800/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-5 w-96 h-96 bg-purple-300/40 [.dark_&]:bg-purple-700/30 rounded-full blur-3xl animate-ping"></div>
+      </div>
 
-        {/* Contact Us Heading Card */}
-        <div className="w-full max-w-md bg-white/60 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 text-center backdrop-blur-md">
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Contact Us
-          </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Reach out through any platform below
-          </p>
+      <h1 className="text-center text-5xl font-extrabold text-gray-900 [.dark_&]:text-white drop-shadow-lg">
+        Contact <span className="text-blue-600 [.dark_&]:text-blue-400">Us</span>
+      </h1>
+
+      <p className="text-center mt-4 text-lg text-gray-700 [.dark_&]:text-gray-300 max-w-2xl mx-auto">
+        Need help? Have questions? We’re here for you.  
+        Reach out through the form or our social links!
+      </p>
+
+      {/* ===== MAIN CONTENT GRID ===== */}
+      <div className="grid lg:grid-cols-3 gap-10 max-w-6xl mx-auto mt-16">
+
+        {/* ----- LEFT: Contact Info + Socials ----- */}
+        <div className="space-y-6">
+
+          {/* Info card */}
+          <div className="p-6 rounded-2xl bg-white/60 [.dark_&]:bg-gray-800/60 backdrop-blur-md border border-white/30 shadow-xl">
+            <h2 className="text-2xl font-bold text-gray-900 [.dark_&]:text-white">
+              Get in Touch
+            </h2>
+            <p className="text-gray-700 [.dark_&]:text-gray-300 mt-2">
+              We usually respond within 24 hours!
+            </p>
+
+            <div className="mt-4 space-y-3 text-gray-800 [.dark_&]:text-gray-300">
+              <p><i className="ri-mail-line text-blue-600 text-xl"></i> support@vitalizer.ai</p>
+              <p><i className="ri-phone-line text-blue-600 text-xl"></i> +91 9876543210</p>
+              <p><i className="ri-map-pin-line text-blue-600 text-xl"></i> Bangalore, India</p>
+            </div>
+          </div>
+
+          {/* Socials Header */}
+          <h3 className="text-xl font-semibold text-gray-900 [.dark_&]:text-white">
+            Connect With Us
+          </h3>
+
+          {/* SOCIAL CARDS */}
+          {[
+            {
+              icon: "ri-linkedin-box-fill",
+              color: "text-blue-600",
+              label: "LinkedIn",
+              link: "https://linkedin.com"
+            },
+            {
+              icon: "ri-github-fill",
+              color: "text-gray-800 [.dark_&]:text-gray-300",
+              label: "GitHub",
+              link: "https://github.com"
+            },
+            {
+              icon: "ri-instagram-fill",
+              color: "text-pink-600",
+              label: "Instagram",
+              link: "https://instagram.com"
+            },
+          ].map((s, i) => (
+            <a
+              key={i}
+              href={s.link}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white/60 [.dark_&]:bg-gray-800/60 border border-white/30 [.dark_&]:border-gray-700 
+              shadow-md backdrop-blur-md hover:scale-[1.03] hover:bg-white/70 transition"
+            >
+              <i className={`${s.icon} ${s.color} text-4xl`}></i>
+              <span className="text-lg font-medium text-gray-900 [.dark_&]:text-white">
+                {s.label}
+              </span>
+            </a>
+          ))}
         </div>
 
-        {/* LinkedIn Card */}
-        <a
-          href="https://linkedin.com"
-          target="_blank"
-          rel="noreferrer"
-          className="w-full max-w-md bg-white/60 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 flex items-center space-x-4 hover:bg-white/70 dark:hover:bg-gray-800/70 transition backdrop-blur-md"
-        >
-          <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8.98h5V24H0V8.98zm7.98 0H13v2.1c.72-1.35 2.54-2.58 5.23-2.58C22.42 8.5 24 11.02 24 15.3V24h-5v-8c0-2.02-.73-3.4-2.57-3.4-1.4 0-2.24.94-2.61 1.85-.14.33-.17.78-.17 1.24V24H7.98V8.98z" />
-          </svg>
-          <span className="text-lg font-medium text-gray-900 dark:text-white">LinkedIn</span>
-        </a>
+        {/* ----- MIDDLE: CONTACT FORM ----- */}
+        <div className="lg:col-span-2 p-8 rounded-2xl bg-white/70 [.dark_&]:bg-gray-800/70 backdrop-blur-lg border border-white/30 shadow-xl">
 
-        {/* GitHub Card */}
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noreferrer"
-          className="w-full max-w-md bg-white/60 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 flex items-center space-x-4 hover:bg-white/70 dark:hover:bg-gray-800/70 transition backdrop-blur-md"
-        >
-          <svg className="w-8 h-8 text-gray-700 dark:text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.4 7.86 10.94.58.1.79-.25.79-.56v-2.1c-3.2.7-3.87-1.54-3.87-1.54-.52-1.3-1.27-1.65-1.27-1.65-1.04-.72.08-.71.08-.71 1.15.08 1.76 1.2 1.76 1.2 1.02 1.75 2.67 1.24 3.32.95.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.27-5.23-5.65 0-1.25.44-2.28 1.17-3.09-.12-.29-.51-1.45.11-3.01 0 0 .96-.31 3.14 1.18a10.94 10.94 0 0 1 5.72 0c2.18-1.49 3.14-1.18 3.14-1.18.62 1.56.23 2.72.11 3.01.73.81 1.17 1.84 1.17 3.09 0 4.39-2.69 5.36-5.25 5.64.41.36.78 1.08.78 2.18v3.24c0 .31.21.66.79.55A10.98 10.98 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z" />
-          </svg>
-          <span className="text-lg font-medium text-gray-900 dark:text-white">GitHub</span>
-        </a>
+          <h2 className="text-2xl font-bold text-gray-900 [.dark_&]:text-white mb-6">
+            Send Us a Message
+          </h2>
 
-        {/* Instagram Card */}
-        <a
-          href="https://instagram.com"
-          target="_blank"
-          rel="noreferrer"
-          className="w-full max-w-md bg-white/60 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md p-6 flex items-center space-x-4 hover:bg-white/70 dark:hover:bg-gray-800/70 transition backdrop-blur-md"
-        >
-          <svg className="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5A3.5 3.5 0 1 0 12 15a3.5 3.5 0 0 0 0-7Zm5.5-.88a1.12 1.12 0 1 1-2.24 0 1.12 1.12 0 0 1 2.24 0Z" />
-          </svg>
-          <span className="text-lg font-medium text-gray-900 dark:text-white">Instagram</span>
-        </a>
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="p-3 rounded-lg border border-gray-300 [.dark_&]:border-gray-700 bg-white/80 [.dark_&]:bg-gray-900/40 text-gray-900 [.dark_&]:text-white"
+            />
 
+            <input
+              type="email"
+              placeholder="Your Email"
+              className="p-3 rounded-lg border border-gray-300 [.dark_&]:border-gray-700 bg-white/80 [.dark_&]:bg-gray-900/40 text-gray-900 [.dark_&]:text-white"
+            />
+
+            <input
+              type="text"
+              placeholder="Subject"
+              className="md:col-span-2 p-3 rounded-lg border border-gray-300 [.dark_&]:border-gray-700 bg-white/80 [.dark_&]:bg-gray-900/40 text-gray-900 [.dark_&]:text-white"
+            />
+
+            <textarea
+              rows="5"
+              placeholder="Your Message"
+              className="md:col-span-2 p-3 rounded-lg border border-gray-300 [.dark_&]:border-gray-700 bg-white/80 [.dark_&]:bg-gray-900/40 text-gray-900 [.dark_&]:text-white"
+            ></textarea>
+
+            <button
+              type="submit"
+              className="md:col-span-2 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-md text-lg font-medium active:scale-95 transition"
+            >
+              Send Message →
+            </button>
+          </form>
+        </div>
       </div>
+
+      {/* MAP SECTION */}
+      <div className="max-w-5xl mx-auto mt-20 rounded-2xl overflow-hidden shadow-lg border border-white/30">
+        <iframe
+          title="map"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.940305243508!2d77.594562!3d12.971598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBangalore!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
+          className="w-full h-[350px] border-0"
+          allowFullScreen=""
+          loading="lazy"
+        ></iframe>
+      </div>
+
     </div>
   );
 };

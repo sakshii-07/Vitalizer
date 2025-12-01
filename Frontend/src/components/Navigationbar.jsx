@@ -27,14 +27,14 @@ export const Navigationbar = () => {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <nav className="bg-white [.dark_&]:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 [.dark_&]:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Logo */}
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap [.dark_&]:text-white">
             Vitalizer
           </span>
         </Link>
@@ -44,36 +44,50 @@ export const Navigationbar = () => {
           <li>
             <Link
               to="/home"
-              className="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+              className="text-gray-900 hover:text-blue-700 [.dark_&]:text-white [.dark_&]:hover:text-blue-400"
             >
               Home
             </Link>
           </li>
+
           <li>
             <Link
               to="/about"
-              className="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+              className="text-gray-900 hover:text-blue-700 [.dark_&]:text-white [.dark_&]:hover:text-blue-400"
             >
               About
             </Link>
           </li>
+
           <li>
             <Link
               to="/services"
-              className="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+              className="text-gray-900 hover:text-blue-700 [.dark_&]:text-white [.dark_&]:hover:text-blue-400"
             >
               Services
             </Link>
           </li>
+
           <li>
             <Link
               to="/contacts"
-              className="text-gray-900 hover:text-blue-700 dark:text-white dark:hover:text-blue-400"
+              className="text-gray-900 hover:text-blue-700 [.dark_&]:text-white [.dark_&]:hover:text-blue-400"
             >
               Contact
             </Link>
           </li>
+
+          {/* ✅ NEW — Medical Assistant */}
+          <li>
+            <Link
+              to="/assistant"
+              className="text-gray-900 hover:text-blue-700 [.dark_&]:text-white [.dark_&]:hover:text-blue-400"
+            >
+              Assistant
+            </Link>
+          </li>
         </ul>
+
 
         {/* Right side: Theme toggle + Auth buttons */}
         <div className="flex items-center space-x-4">
@@ -81,7 +95,7 @@ export const Navigationbar = () => {
           <button
             type="button"
             onClick={toggleTheme}
-            className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 active:scale-95 transition"
+            className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 [.dark_&]:border-gray-600 text-gray-600 [.dark_&]:text-gray-200 hover:bg-gray-100 [.dark_&]:hover:bg-gray-700 active:scale-95 transition"
           >
             {theme === "light" ? (
               // Sun Icon

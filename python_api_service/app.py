@@ -149,53 +149,66 @@ def get_symptoms():
         {"id": sid, "name": name} for sid, name in symptom_id_map.items()
     ])
 
+# === Build reverse index: symptom → diseases ===
+symptom_to_diseases = {}
+for disease, symptoms in disease_map.items():
+    for s in symptoms:
+        if s not in symptom_to_diseases:
+            symptom_to_diseases[s] = set()
+        symptom_to_diseases[s].add(disease)
+
+
 
 @app.route("/diagnosis", methods=["GET"])
 def get_diagnosis():
-    """
-    Accepts: ?id=1&id=2...
-    Returns: diseases matching at least one symptom,
-             ranked by match strength.
-    """
     ids = request.args.getlist("id", type=int)
+
     if not ids:
         return jsonify({"error": "Please provide one or more symptom IDs"}), 400
 
     selected_symptoms = [symptom_id_map[i] for i in ids if i in symptom_id_map]
-    if not selected_symptoms:
-        return jsonify({"error": "Invalid symptom IDs"}), 400
 
-    matched = []
-    for disease, symptoms in disease_map.items():
-        matched_count = len(set(selected_symptoms) & symptoms)
-        if matched_count > 0:
-            total = len(symptoms)
-            ratio = matched_count / total
-            severity_score = sum(
-                severity_map.get(s, 1) for s in selected_symptoms if s in symptoms
-            )
+    # ⭐ UNION OF ALL DISEASES FOR ANY SYMPTOM
+    possible_diseases = set()
+    for s in selected_symptoms:
+        possible_diseases |= symptom_to_diseases.get(s, set())
 
-            matched.append({
-                "disease": disease,
-                "matched_symptom_count": matched_count,
-                "total_symptoms": total,
-                "match_ratio": round(ratio, 2),
-                "severity_score": severity_score
-            })
-
-    if not matched:
+    if not possible_diseases:
         return jsonify({
             "input_symptoms": selected_symptoms,
             "possible_diseases": [],
-            "message": "No matching disease found"
+            "message": "No matching disease found for selected symptoms."
         })
 
-    matched.sort(key=lambda x: (x["matched_symptom_count"], x["match_ratio"]), reverse=True)
+    results = []
+    for disease in possible_diseases:
+        symptoms = disease_map[disease]
+
+        matched_count = len(set(selected_symptoms) & symptoms)
+        total = len(symptoms)
+        ratio = round(matched_count / total, 2)
+
+        severity_score = sum(
+            severity_map.get(s, 1) for s in selected_symptoms if s in symptoms
+        )
+
+        results.append({
+            "disease": disease,
+            "matched_symptom_count": matched_count,
+            "total_symptoms": total,
+            "match_ratio": ratio,
+            "severity_score": severity_score
+        })
+
+    # Sort results by best match
+    results.sort(key=lambda x: (x["matched_symptom_count"], x["match_ratio"]), reverse=True)
 
     return jsonify({
         "input_symptoms": selected_symptoms,
-        "possible_diseases": matched
+        "possible_diseases": results
     })
+
+
 
 
 @app.route("/details/<disease>", methods=["GET"])
