@@ -76,6 +76,8 @@ export const Navigationbar = () => {
               Contact
             </Link>
           </li>
+          <li><Link to="/health-tips">Health Tips</Link></li>
+
 
           {/* ✅ NEW — Medical Assistant */}
           <li>

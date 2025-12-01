@@ -9,6 +9,9 @@ import { Services } from "./components/Services";
 import { Contacts } from "./components/Contacts";
 import { Symptomss } from "./components/Symptomss"; // optional / old page
 import Symptoms from "./Symptoms"; // ✅ our new Medical Assistant page
+import { HealthTips } from "./components/HealthTips";
+
+
 
 export function AppLayout({ children }) {
   return (
@@ -30,6 +33,8 @@ function App() {
 
           {/* Static pages */}
           <Route path="/about" element={<About />} />
+          <Route path="/health-tips" element={<HealthTips />} />
+
           <Route path="/services" element={<Services />} />
           <Route path="/contacts" element={<Contacts />} />
 
